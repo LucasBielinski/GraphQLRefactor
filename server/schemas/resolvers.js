@@ -45,18 +45,18 @@ const resolvers = {
       }
       throw new AuthenticationError("must be logged in");
     },
-  },
 
-  deleteBook: async (parent, { bookId }, context) => {
-    if (context.user) {
-      const userInfo = await User.findByIdAndUpdate(
-        context.user._id,
-        { $pull: { saveBooks: { bookId } } },
-        { new: true }
-      );
-      return userInfo;
-    }
-    throw new AuthenticationError("must be logged in");
+    deleteBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        const userInfo = await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { savedBooks: { bookId } } },
+          { new: true }
+        );
+        return userInfo;
+      }
+      throw new AuthenticationError("must be logged in");
+    },
   },
 };
 
