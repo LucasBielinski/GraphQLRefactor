@@ -40,6 +40,7 @@ const resolvers = {
     },
     // creates saved book
     saveBook: async (parent, { input }, context) => {
+      console.log("Saving a book");
       if (context.user) {
         const userInfo = await User.findByIdAndUpdate(
           context.user._id,
