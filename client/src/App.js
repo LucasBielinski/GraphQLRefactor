@@ -10,11 +10,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SearchBooks from "./pages/SearchBooks";
 import SavedBooks from "./pages/SavedBooks";
 import Navbar from "./components/Navbar";
-
+//  turns graphql queries to HTTP requests
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
-
+// getss token from local storage and returns new header object
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
 
@@ -25,6 +25,7 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
+// creates new memory cache
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),

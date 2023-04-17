@@ -7,13 +7,15 @@ const db = require("./config/connection");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
 });
+
 // does this have to be false?
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets
@@ -28,7 +30,7 @@ app.get("/", (req, res) => {
 const apolloServerBegin = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
-  db.once("once", () => {
+  db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API is up at ${PORT}`);
       console.log(`GraphQl at http://localhost:${PORT}${server.graphqlPath}`);

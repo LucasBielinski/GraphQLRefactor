@@ -27,6 +27,7 @@ const LoginForm = () => {
     }
 
     try {
+      // sets login data
       const { data } = await login({
         variables: { ...userFormData },
       });

@@ -3,6 +3,7 @@ const { User, Book } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
+  // sets resolver to query users saved books
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
@@ -11,7 +12,9 @@ const resolvers = {
       throw new AuthenticationError("you must be logged in");
     },
   },
+  // mutations mutate datat
   Mutation: {
+    // creates a user
     createUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
@@ -20,6 +23,7 @@ const resolvers = {
       }
       return { token, user };
     },
+    // creates a login
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -34,6 +38,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    // creates saved book
     saveBook: async (parent, { input }, context) => {
       if (context.user) {
         const userInfo = await User.findByIdAndUpdate(
@@ -45,7 +50,7 @@ const resolvers = {
       }
       throw new AuthenticationError("must be logged in");
     },
-
+    // deletes a book
     deleteBook: async (parent, { bookId }, context) => {
       if (context.user) {
         const userInfo = await User.findByIdAndUpdate(

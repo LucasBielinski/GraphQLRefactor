@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
@@ -7,11 +7,15 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
+  // uses query gets loading and datat from query
   const { loading, data } = useQuery(QUERY_ME);
+  // updates cache for updating book
   const [deleteBook, { error }] = useMutation(REMOVE_BOOK, {
     update(cache, { data: { bookId } }) {
       try {
+        // gets data for me from query me
         const { me } = cache.readQuery({ query: QUERY_ME });
+        // writes query from cache
         cache.writeQuery({
           query: QUERY_ME,
           data: {
@@ -38,10 +42,12 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await deleteBook({
+      // deletes book by bookid
+      await deleteBook({
         variables: { bookId },
       });
       // upon success, remove book's id from localStorage
+      // removes book id from local sotrage
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
