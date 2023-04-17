@@ -6,11 +6,13 @@ This project is a refacotr of a project that was formerly using REST API. I refa
 
 ## Installation
 
-N/A
+The following must be installed to run locally; graphQl, express, bcrypt, apollo-server-express, apollo-client, nodemon, jsonwebtoken, and mongoose/
 
 ## Usage
 
-To use this project, create an account, login, search a book and save it to your account. If you would like to delete a book, simply click the rmove book button.
+To use this project, create an account, login, search a book and click the save button to save it to your account. If you would like to delete a book, simply click the rmove book button.
+![image of saved](./client/public/images/one.png)
+![image of front page](./client/public/images/two.png)
 
 ## Credits
 
